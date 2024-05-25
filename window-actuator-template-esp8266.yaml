@@ -32,8 +32,6 @@ dashboard_import:
   import_full_config: true
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
   fast_connect: true
   ap:
     password: "3Kn4l7U6bUG4"
