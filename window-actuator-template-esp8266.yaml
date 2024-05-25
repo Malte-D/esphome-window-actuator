@@ -40,6 +40,8 @@ wifi:
 # to provision wifi credentials to the device.
 captive_portal:
 
+improv_serial:
+
 
 ##########################################################
 # Most projects should not remove anything from above here
