@@ -125,5 +125,5 @@ cover:
               state: CLOSED
     stop_action:
       - switch.turn_off: relay
-    optimistic: true
+    optimistic: false
 
