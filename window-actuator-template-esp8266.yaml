@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "project-template"
+  name: "Window Actuator"
 
 esphome:
   name: "${name}"
@@ -11,7 +11,7 @@ esphome:
   # This will allow for (future) project identification,
   # configuration and updates.
   project:
-    name: esphome.project-template
+    name: esphome.window-actuator
     version: "1.0"
 
 esp8266:
@@ -28,12 +28,15 @@ ota:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://esphome/esphome-project-template/project-template-esp8266.yaml@main
+  package_import_url: github://Malte-D/esphome-window-actuator/window-actuator-template-esp8266.yaml@main
+  import_full_config: true
 
 wifi:
-  # Set up a wifi access point using the device name above
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
   ap:
-    password: "12345678"
+    password: "3Kn4l7U6bUG4"
 
 # In combination with the `ap` this allows the user
 # to provision wifi credentials to the device.
@@ -47,6 +50,80 @@ captive_portal:
 ##########################################################
 
 
-# Sets up the improv via serial client for Wi-Fi provisioning.
-# Handy if your device has a usb port for the user to add credentials when they first get it.
-improv_serial:
+servo:
+  - id: servo_movement
+    output: pwm_output
+    auto_detach_time: 5s
+    min_level: 2.5%
+    max_level: 12.5%
+    transition_length: 2s
+  - id: servo_handle
+    output: pwm_output_2
+    auto_detach_time: 5s
+    min_level: 2.5%
+    max_level: 12.5%
+    transition_length: 3s
+
+output:
+  - platform: esp8266_pwm
+    id: pwm_output
+    pin: D1
+    frequency: 50 Hz
+  - platform: esp8266_pwm
+    id: pwm_output_2
+    pin: D3
+    frequency: 50 Hz
+
+switch:
+  - platform: gpio
+    pin:
+      number: D2
+      mode: 
+        output: true
+    id: relay
+
+cover:
+  - platform: template
+    id: window
+    device_class: window
+    name: "Window"
+    open_action:
+      - then:
+          - switch.turn_on: relay
+          - cover.template.publish:
+              id: window
+              current_operation: OPENING
+          - servo.write:
+              id: servo_handle
+              level: -72%
+          - delay: 3s
+          - servo.write:
+              id: servo_movement
+              level: 68%
+          - delay: 3s
+          - switch.turn_off: relay
+          - cover.template.publish:
+              id: window
+              state: OPEN
+    close_action:
+      - then:
+          - switch.turn_on: relay
+          - cover.template.publish:
+              id: window
+              current_operation: CLOSING
+          - servo.write:
+              id: servo_movement
+              level: -100%
+          - delay: 3s
+          - servo.write:
+              id: servo_handle
+              level: 65%
+          - delay: 3s
+          - switch.turn_off: relay
+          - cover.template.publish:
+              id: window
+              state: CLOSED
+    stop_action:
+      - switch.turn_off: relay
+    optimistic: true
+
