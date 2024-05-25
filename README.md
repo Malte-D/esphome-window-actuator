@@ -24,3 +24,4 @@ easily install your project onto their device.
    c. Hit the save button
 8. Push your changes to the repository and GitHub Actions will automatically build and deploy your project.
 
+...
