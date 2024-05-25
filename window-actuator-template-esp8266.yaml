@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "Window Actuator"
+  name: "window-actuator"
 
 esphome:
   name: "${name}"
