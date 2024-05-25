@@ -127,3 +127,14 @@ cover:
       - switch.turn_off: relay
     optimistic: false
 
+button:
+  - platform: template
+    name: home
+    id: btn_home
+    on_press:
+      then:
+        - cover.template.publish:
+            id: window
+            state: CLOSED
+
+
