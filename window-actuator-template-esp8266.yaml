@@ -57,12 +57,14 @@ servo:
     min_level: 2.5%
     max_level: 12.5%
     transition_length: 2s
+    restore: true
   - id: servo_handle
     output: pwm_output_2
     auto_detach_time: 5s
     min_level: 2.5%
     max_level: 12.5%
     transition_length: 3s
+    restore: true
 
 output:
   - platform: esp8266_pwm
