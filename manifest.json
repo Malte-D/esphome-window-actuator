@@ -6,9 +6,13 @@
   "builds": [
     {
       "chipFamily": "ESP8266",
+      "ota": {
+        "path": "window-actuator-esp8266/window-actuator-esp8266.ota.bin",
+        "md5": "e129eb22b46b73a5d85edd7cad11fc54"
+      },
       "parts": [
         {
-          "path": "window-actuator-esp8266/window-actuator-esp8266.bin",
+          "path": "window-actuator-esp8266/window-actuator-esp8266.factory.bin",
           "offset": 0
         }
       ]
