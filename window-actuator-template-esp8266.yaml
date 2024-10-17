@@ -13,6 +13,24 @@ esphome:
   project:
     name: esphome.window-actuator
     version: "1.1.0"
+  on_boot:
+    priority: 500
+    then:
+      - number.set:
+          id: servo_movement_open_adjust
+          value: !lambda 'return id(servo_movement_open_position);'
+      - number.set:
+          id: servo_movement_close_adjust
+          value: !lambda 'return id(servo_movement_close_position);'
+      - number.set:
+          id: servo_handle_open_adjust
+          value: !lambda 'return id(servo_handle_open_position);'
+      - number.set:
+          id: servo_handle_close_adjust
+          value: !lambda 'return id(servo_handle_close_position);'
+      - number.set:
+          id: servo_handle_fully_open_adjust
+          value: !lambda 'return id(servo_handle_fully_open_position);'
 
 esp8266:
   board: d1_mini
@@ -25,6 +43,7 @@ api:
 
 # OTA is required for Over-the-Air updating
 ota:
+  platform: "esphome"
 
 # This should point to the public location of this yaml file.
 dashboard_import:
@@ -48,6 +67,15 @@ improv_serial:
 # and should just modify the name, project name/version 
 # and git url for the dashboard_import
 ##########################################################
+output:
+  - platform: esp8266_pwm
+    id: pwm_output
+    pin: D1
+    frequency: 50 Hz
+  - platform: esp8266_pwm
+    id: pwm_output_2
+    pin: D3
+    frequency: 50 Hz
 
 servo:
   - id: servo_movement
@@ -106,7 +134,6 @@ number:
     min_value: -100
     max_value: 100
     step: 1
-    initial_value: !lambda 'return id(servo_movement_open_position);'
     set_action:
       then:
         - globals.set:
@@ -119,7 +146,6 @@ number:
     min_value: -100
     max_value: 100
     step: 1
-    initial_value: !lambda 'return id(servo_movement_close_position);'
     set_action:
       then:
         - globals.set:
@@ -132,7 +158,6 @@ number:
     min_value: -100
     max_value: 100
     step: 1
-    initial_value: !lambda 'return id(servo_handle_open_position);'
     set_action:
       then:
         - globals.set:
@@ -145,7 +170,6 @@ number:
     min_value: -100
     max_value: 100
     step: 1
-    initial_value: !lambda 'return id(servo_handle_close_position);'
     set_action:
       then:
         - globals.set:
@@ -158,55 +182,60 @@ number:
     min_value: -100
     max_value: 100
     step: 1
-    initial_value: !lambda 'return id(servo_handle_fully_open_position);'
     set_action:
       then:
         - globals.set:
             id: servo_handle_fully_open_position
             value: !lambda 'return x;'
+            
 
 cover:
   - platform: template
     id: window
     device_class: window
     name: "Window"
-    enabled: !lambda 'return id(maintenance_mode).state == false;'
     open_action:
-      - then:
-          - switch.turn_on: relay
-          - cover.template.publish:
-              id: window
-              current_operation: OPENING
-          - servo.write:
-              id: servo_handle
-              level: !lambda 'return id(servo_handle_open_position);'
-          - delay: 3s
-          - servo.write:
-              id: servo_movement
-              level: !lambda 'return id(servo_movement_open_position);'
-          - delay: 3s
-          - switch.turn_off: relay
-          - cover.template.publish:
-              id: window
-              state: OPEN
+      - if:
+          condition:
+            lambda: 'return !id(maintenance_mode).state;'
+          then:
+              - switch.turn_on: relay
+              - cover.template.publish:
+                  id: window
+                  current_operation: OPENING
+              - servo.write:
+                  id: servo_handle
+                  level: !lambda 'return id(servo_handle_open_position);'
+              - delay: 3s
+              - servo.write:
+                  id: servo_movement
+                  level: !lambda 'return id(servo_movement_open_position);'
+              - delay: 3s
+              - switch.turn_off: relay
+              - cover.template.publish:
+                  id: window
+                  state: OPEN
     close_action:
-      - then:
-          - switch.turn_on: relay
-          - cover.template.publish:
-              id: window
-              current_operation: CLOSING
-          - servo.write:
-              id: servo_movement
-              level: !lambda 'return id(servo_movement_close_position);'
-          - delay: 3s
-          - servo.write:
-              id: servo_handle
-              level: !lambda 'return id(servo_handle_close_position);'
-          - delay: 3s
-          - switch.turn_off: relay
-          - cover.template.publish:
-              id: window
-              state: CLOSED
+        - if:
+            condition:
+              lambda: 'return !id(maintenance_mode).state;'
+            then:
+                - switch.turn_on: relay
+                - cover.template.publish:
+                    id: window
+                    current_operation: CLOSING
+                - servo.write:
+                    id: servo_movement
+                    level: !lambda 'return id(servo_movement_close_position);'
+                - delay: 3s
+                - servo.write:
+                    id: servo_handle
+                    level: !lambda 'return id(servo_handle_close_position);'
+                - delay: 3s
+                - switch.turn_off: relay
+                - cover.template.publish:
+                    id: window
+                    state: CLOSED
     stop_action:
       - switch.turn_off: relay
     optimistic: false
@@ -216,75 +245,91 @@ button:
   - platform: template
     name: home
     id: btn_home
-    enabled: !lambda 'return id(maintenance_mode).state == false;'
     on_press:
-      then:
-        - cover.template.publish:
-            id: window
-            state: CLOSED
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state == false;'
+          then:
+            - cover.template.publish:
+                id: window
+                state: CLOSED
   
   - platform: template
     name: manual_handle_open
     id: btn_manual_handle_open
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - servo.write:
-              id: servo_handle
-              level: !lambda 'return id(servo_handle_open_position);'
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - servo.write:
+                id: servo_handle
+                level: !lambda 'return id(servo_handle_open_position);'
   
   - platform: template
     name: manual_handle_close
     id: btn_manual_handle_close
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - servo.write:
-              id: servo_handle
-              level: !lambda 'return id(servo_handle_close_position);'
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - servo.write:
+                id: servo_handle
+                level: !lambda 'return id(servo_handle_close_position);'
 
   - platform: template
     name: manual_handle_fully_open
     id: btn_manual_handle_fully_open
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - servo.write:
-              id: servo_handle
-              level: !lambda 'return id(servo_handle_fully_open_position);'
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - servo.write:
+                id: servo_handle
+                level: !lambda 'return id(servo_handle_fully_open_position);'
 
   - platform: template
     name: manual_movement_open
     id: btn_manual_movement_open
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - servo.write:
-              id: servo_movement
-              level: !lambda 'return id(servo_movement_open_position);'
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - servo.write:
+                id: servo_movement
+                level: !lambda 'return id(servo_movement_open_position);'
   
   - platform: template
     name: manual_movement_close
     id: btn_manual_movement_close
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - servo.write:
-              id: servo_movement
-              level: !lambda 'return id(servo_movement_close_position);'
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - servo.write:
+                id: servo_movement
+                level: !lambda 'return id(servo_movement_close_position);'
 
   - platform: template
     name: relay_on
     id: btn_relay_on
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - switch.turn_on: relay
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - switch.turn_on: relay
 
   - platform: template
     name: relay_off
     id: btn_relay_off
-    enabled: !lambda 'return id(maintenance_mode).state;'
     on_press:
-      then:
-         - switch.turn_off: relay
+      - if:
+          condition:
+            lambda: 'return id(maintenance_mode).state;'
+          then:
+            - switch.turn_off: relay
