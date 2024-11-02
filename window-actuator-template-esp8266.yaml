@@ -13,24 +13,6 @@ esphome:
   project:
     name: esphome.window-actuator
     version: "1.1.0"
-  on_boot:
-    priority: 500
-    then:
-      - number.set:
-          id: servo_movement_open_adjust
-          value: !lambda 'return id(servo_movement_open_position);'
-      - number.set:
-          id: servo_movement_close_adjust
-          value: !lambda 'return id(servo_movement_close_position);'
-      - number.set:
-          id: servo_handle_open_adjust
-          value: !lambda 'return id(servo_handle_open_position);'
-      - number.set:
-          id: servo_handle_close_adjust
-          value: !lambda 'return id(servo_handle_close_position);'
-      - number.set:
-          id: servo_handle_fully_open_adjust
-          value: !lambda 'return id(servo_handle_fully_open_position);'
 
 esp8266:
   board: d1_mini
@@ -104,6 +86,22 @@ switch:
     id: maintenance_mode
     optimistic: true
     name: "Maintenance Mode"
+    on_turn_on:
+      - number.set:
+          id: servo_movement_open_adjust
+          value: !lambda 'return id(servo_movement_open_position);'
+      - number.set:
+          id: servo_movement_close_adjust
+          value: !lambda 'return id(servo_movement_close_position);'
+      - number.set:
+          id: servo_handle_open_adjust
+          value: !lambda 'return id(servo_handle_open_position);'
+      - number.set:
+          id: servo_handle_close_adjust
+          value: !lambda 'return id(servo_handle_close_position);'
+      - number.set:
+          id: servo_handle_fully_open_adjust
+          value: !lambda 'return id(servo_handle_fully_open_position);'
 
 globals:
   - id: servo_movement_open_position
