@@ -86,6 +86,7 @@ switch:
     id: maintenance_mode
     optimistic: true
     name: "Maintenance Mode"
+    entity_category: config
     on_turn_on:
       - number.set:
           id: servo_movement_open_adjust
