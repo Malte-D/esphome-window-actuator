@@ -90,18 +90,33 @@ switch:
       - number.set:
           id: servo_movement_open_adjust
           value: !lambda 'return id(servo_movement_open_position);'
+      - number.template.publish:
+          id: servo_movement_open_adjust
+          state: !lambda 'return id(servo_movement_open_position);'
       - number.set:
           id: servo_movement_close_adjust
           value: !lambda 'return id(servo_movement_close_position);'
+      - number.template.publish:
+          id: servo_movement_close_adjust
+          state: !lambda 'return id(servo_movement_close_position);'
       - number.set:
           id: servo_handle_open_adjust
           value: !lambda 'return id(servo_handle_open_position);'
+      - number.template.publish:
+          id: servo_handle_open_adjust
+          state: !lambda 'return id(servo_handle_open_position);'
       - number.set:
           id: servo_handle_close_adjust
           value: !lambda 'return id(servo_handle_close_position);'
+      - number.template.publish:
+          id: servo_handle_close_adjust
+          state: !lambda 'return id(servo_handle_close_position);'
       - number.set:
           id: servo_handle_fully_open_adjust
           value: !lambda 'return id(servo_handle_fully_open_position);'
+      - number.template.publish:
+          id: servo_handle_fully_open_adjust
+          state: !lambda 'return id(servo_handle_fully_open_position);'
 
 globals:
   - id: servo_movement_open_position
