@@ -12,7 +12,7 @@ esphome:
   # configuration and updates.
   project:
     name: malte-d.window-actuator
-    version: "1.1.1"
+    version: "1.1.2"
 
 esp8266:
   board: d1_mini
