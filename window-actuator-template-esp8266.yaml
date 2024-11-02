@@ -133,6 +133,7 @@ number:
     max_value: 100
     step: 1
     optimistic: true
+    mode: box
     set_action:
       then:
         - globals.set:
@@ -146,6 +147,7 @@ number:
     max_value: 100
     step: 1
     optimistic: true
+    mode: box
     set_action:
       then:
         - globals.set:
@@ -159,6 +161,7 @@ number:
     max_value: 100
     step: 1
     optimistic: true
+    mode: box
     set_action:
       then:
         - globals.set:
@@ -172,6 +175,7 @@ number:
     max_value: 100
     step: 1
     optimistic: true
+    mode: box
     set_action:
       then:
         - globals.set:
@@ -185,6 +189,7 @@ number:
     max_value: 100
     step: 1
     optimistic: true
+    mode: box
     set_action:
       then:
         - globals.set:
