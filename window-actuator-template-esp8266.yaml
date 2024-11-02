@@ -134,7 +134,7 @@ number:
     step: 1
     optimistic: true
     mode: box
-    entity_category: EntityCategory.CONFIG
+    entity_category: config
     set_action:
       then:
         - globals.set:
@@ -149,7 +149,7 @@ number:
     step: 1
     optimistic: true
     mode: box
-    entity_category: EntityCategory.CONFIG
+    entity_category: config
     set_action:
       then:
         - globals.set:
@@ -164,7 +164,7 @@ number:
     step: 1
     optimistic: true
     mode: box
-    entity_category: EntityCategory.CONFIG
+    entity_category: config
     set_action:
       then:
         - globals.set:
@@ -179,7 +179,7 @@ number:
     step: 1
     optimistic: true
     mode: box
-    entity_category: EntityCategory.CONFIG
+    entity_category: config
     set_action:
       then:
         - globals.set:
@@ -194,7 +194,7 @@ number:
     step: 1
     optimistic: true
     mode: box
-    entity_category: EntityCategory.CONFIG
+    entity_category: config
     set_action:
       then:
         - globals.set:
