@@ -8,7 +8,7 @@
       "chipFamily": "ESP8266",
       "ota": {
         "path": "window-actuator-esp8266/window-actuator-esp8266.ota.bin",
-        "md5": "dd12095f7656447eea07841698f4491b"
+        "md5": "c19dec4354ceeaf47eb4ec239810892d"
       },
       "parts": [
         {
