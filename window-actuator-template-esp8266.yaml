@@ -258,6 +258,7 @@ button:
   - platform: template
     name: home
     id: btn_home
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -270,6 +271,7 @@ button:
   - platform: template
     name: manual_handle_open
     id: btn_manual_handle_open
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -282,6 +284,7 @@ button:
   - platform: template
     name: manual_handle_close
     id: btn_manual_handle_close
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -294,6 +297,7 @@ button:
   - platform: template
     name: manual_handle_fully_open
     id: btn_manual_handle_fully_open
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -306,6 +310,7 @@ button:
   - platform: template
     name: manual_movement_open
     id: btn_manual_movement_open
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -318,6 +323,7 @@ button:
   - platform: template
     name: manual_movement_close
     id: btn_manual_movement_close
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -330,6 +336,7 @@ button:
   - platform: template
     name: relay_on
     id: btn_relay_on
+    entity_category: config
     on_press:
       - if:
           condition:
@@ -340,6 +347,7 @@ button:
   - platform: template
     name: relay_off
     id: btn_relay_off
+    entity_category: config
     on_press:
       - if:
           condition:
