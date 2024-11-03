@@ -4,7 +4,7 @@
 - 4x M3x10 countersunk (Servohorns)
 - 1x M3x10 (PCB)
 - 1x M4x16 (Top window mount)
-- ...
+- 1x M6x25 (Arm pivot)
 
 ## Hardware ##
 - O-Ring 10x2mm (10mm ID)
