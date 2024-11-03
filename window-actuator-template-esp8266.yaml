@@ -219,11 +219,11 @@ cover:
                   current_operation: OPENING
               - servo.write:
                   id: servo_handle
-                  level: !lambda 'return id(servo_handle_open_position);'
+                  level: !lambda 'return id(servo_handle_open_position) / 100;'
               - delay: 3s
               - servo.write:
                   id: servo_movement
-                  level: !lambda 'return id(servo_movement_open_position);'
+                  level: !lambda 'return id(servo_movement_open_position) / 100;'
               - delay: 3s
               - switch.turn_off: relay
               - cover.template.publish:
@@ -240,11 +240,11 @@ cover:
                     current_operation: CLOSING
                 - servo.write:
                     id: servo_movement
-                    level: !lambda 'return id(servo_movement_close_position);'
+                    level: !lambda 'return id(servo_movement_close_position) / 100;'
                 - delay: 3s
                 - servo.write:
                     id: servo_handle
-                    level: !lambda 'return id(servo_handle_close_position);'
+                    level: !lambda 'return id(servo_handle_close_position) / 100;'
                 - delay: 3s
                 - switch.turn_off: relay
                 - cover.template.publish:
@@ -280,7 +280,7 @@ button:
           then:
             - servo.write:
                 id: servo_handle
-                level: !lambda 'return id(servo_handle_open_position);'
+                level: !lambda 'return id(servo_handle_open_position) / 100;'
   
   - platform: template
     name: manual_handle_close
@@ -293,7 +293,7 @@ button:
           then:
             - servo.write:
                 id: servo_handle
-                level: !lambda 'return id(servo_handle_close_position);'
+                level: !lambda 'return id(servo_handle_close_position) / 100;'
 
   - platform: template
     name: manual_handle_fully_open
@@ -306,7 +306,7 @@ button:
           then:
             - servo.write:
                 id: servo_handle
-                level: !lambda 'return id(servo_handle_fully_open_position);'
+                level: !lambda 'return id(servo_handle_fully_open_position) / 100;'
 
   - platform: template
     name: manual_movement_open
@@ -319,7 +319,7 @@ button:
           then:
             - servo.write:
                 id: servo_movement
-                level: !lambda 'return id(servo_movement_open_position);'
+                level: !lambda 'return id(servo_movement_open_position) / 100;'
   
   - platform: template
     name: manual_movement_close
@@ -332,7 +332,7 @@ button:
           then:
             - servo.write:
                 id: servo_movement
-                level: !lambda 'return id(servo_movement_close_position);'
+                level: !lambda 'return id(servo_movement_close_position) / 100;'
 
   - platform: template
     name: relay_on
