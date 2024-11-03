@@ -3,6 +3,7 @@
 - 4x M3x25 (Servo Base)
 - 4x M3x10 countersunk (Servohorns)
 - 1x M3x10 (PCB)
+- 1x M4x16 (Top window mount)
 - ...
 
 ## Hardware ##
