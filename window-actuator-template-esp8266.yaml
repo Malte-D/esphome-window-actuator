@@ -230,7 +230,7 @@ cover:
                   level: !lambda 'return id(servo_movement_open_position) / 100;'
               - delay: 3s
               - switch.turn_off: relay
-               - cover.template.publish:
+              - cover.template.publish:
                   id: window
                   state: OPEN
                   current_operation: IDLE
