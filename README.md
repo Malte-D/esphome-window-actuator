@@ -1,9 +1,9 @@
-# ESPHome Window Actuator
+# ESPHome Tilt Window Opener
 
 <p align="center">
     <img src="https://img.shields.io/badge/Made%20by%20Human-2ea44f" alt="Made by Human" />
     <img src="https://img.shields.io/badge/Documented%20by%20AI-8250df" alt="Documented by AI" />
-    <a href="https://malte-d.github.io/esphome-window-actuator/" alt="Install with ESP Web Tools">
+    <a href="https://malte-d.github.io/esphome-tilt-window-opener/" alt="Install with ESP Web Tools">
         <img src="https://img.shields.io/badge/ESP_Web_Tools-Install_now-blue" /></a>
 </p>
 
@@ -36,7 +36,7 @@ handle screws and the top unit is hot-glued.
 
 ## How it works
 
-The actuator consists of two units on the sash, connected by a servo cable:
+The opener consists of two units on the sash, connected by a servo cable:
 
 | | Handle unit | Top unit |
 |---|---|---|
@@ -146,7 +146,7 @@ See the step-by-step guide in **[docs/assembly.md](docs/assembly.md)**.
 
 ### Install
 
-1. Open the [installer page](https://malte-d.github.io/esphome-window-actuator/) in Chrome or Edge,
+1. Open the [installer page](https://malte-d.github.io/esphome-tilt-window-opener/) in Chrome or Edge,
    connect the D1 mini via USB and click **Install**.
 2. Enter your Wi-Fi credentials in the installer (Improv). Alternatively, the device opens a
    fallback hotspot `window-actuator-xxxxxx`; its password is set in the YAML (`wifi.ap.password`).

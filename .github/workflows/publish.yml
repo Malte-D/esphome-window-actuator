@@ -12,4 +12,4 @@ jobs:
       # CHANGEME: Set the filenames of your config files here:
       files: window-actuator-template-esp8266.yaml
       # CHANGEME: Set the name of your project here:
-      name: Window Actuator
+      name: Tilt Window Opener
