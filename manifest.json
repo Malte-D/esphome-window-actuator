@@ -1,19 +1,22 @@
 {
-  "name": "Window Actuator",
-  "version": "",
+  "name": "Tilt Window Opener",
+  "version": "2026.10.2",
   "home_assistant_domain": "esphome",
   "new_install_skip_erase": false,
   "builds": [
     {
       "chipFamily": "ESP8266",
       "ota": {
-        "path": "window-actuator-esp8266/window-actuator-esp8266.ota.bin",
-        "md5": "de5528f173bf1658efc847d5f6599c74"
+        "path": "window-actuator-esp8266.ota.bin",
+        "md5": "ff7cd18abd6cd1822e7be68459b25d10",
+        "sha256": "47a56d7e07d87bc6c417482257d21853ba123129632260a4ba1243debd122472"
       },
       "parts": [
         {
-          "path": "window-actuator-esp8266/window-actuator-esp8266.factory.bin",
-          "offset": 0
+          "path": "window-actuator-esp8266.factory.bin",
+          "offset": 0,
+          "md5": "ff7cd18abd6cd1822e7be68459b25d10",
+          "sha256": "47a56d7e07d87bc6c417482257d21853ba123129632260a4ba1243debd122472"
         }
       ]
     }
