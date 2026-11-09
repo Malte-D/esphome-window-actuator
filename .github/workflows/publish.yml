@@ -48,10 +48,13 @@ jobs:
           mkdir output
           mv "$DEVICE" output/
           rm -f output/"$DEVICE"/*.elf
-          jq -s --arg name "$FIRMWARE_NAME" --arg version "$VERSION" \
-            '{name: $name, version: $version, home_assistant_domain: "esphome",
-              new_install_skip_erase: false, builds: .}' \
-            output/*/manifest.json > output/manifest.json
+          # the paths in the build's manifest are relative to its folder
+          jq --arg dir "$DEVICE" --arg name "$FIRMWARE_NAME" --arg version "$VERSION" \
+            '.parts[].path |= "\($dir)/\(.)"
+             | if .ota then .ota.path |= "\($dir)/\(.)" else . end
+             | {name: $name, version: $version, home_assistant_domain: "esphome",
+                new_install_skip_erase: false, builds: [.]}' \
+            output/"$DEVICE"/manifest.json > output/manifest.json
           cat output/manifest.json
           cp -R static/* output/
 
