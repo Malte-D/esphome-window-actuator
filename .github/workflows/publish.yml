@@ -1,15 +1,63 @@
 name: Build and Publish ESPHome firmware and website
 
+# Builds the firmware and deploys it together with the installer page (static/) to the
+# gh-pages branch, which GitHub Pages serves. Replaces esphome/workflows publish.yml,
+# which ESPHome removed in November 2024.
+
 on:
   push:
     branches:
       - main
+    paths:
+      - '*.yaml'
+      - 'static/**'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write  # push to the gh-pages branch
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+env:
+  # Name shown by ESP Web Tools on the installer page
+  FIRMWARE_NAME: Tilt Window Opener
 
 jobs:
-  build:
-    uses: esphome/workflows/.github/workflows/publish.yml@main
-    with:
-      # CHANGEME: Set the filenames of your config files here:
-      files: window-actuator-template-esp8266.yaml
-      # CHANGEME: Set the name of your project here:
-      name: Tilt Window Opener
+  publish:
+    name: Build firmware and publish to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v7.0.1
+
+      - name: Build firmware
+        id: build
+        uses: esphome/build-action@v8.1.0
+        with:
+          yaml-file: window-actuator-template-esp8266.yaml
+          version: stable
+
+      - name: Assemble website
+        env:
+          DEVICE: ${{ steps.build.outputs.name }}
+          VERSION: ${{ steps.build.outputs.version }}
+        run: |
+          mkdir output
+          mv "$DEVICE" output/
+          rm -f output/"$DEVICE"/*.elf
+          jq -s --arg name "$FIRMWARE_NAME" --arg version "$VERSION" \
+            '{name: $name, version: $version, home_assistant_domain: "esphome",
+              new_install_skip_erase: false, builds: .}' \
+            output/*/manifest.json > output/manifest.json
+          cat output/manifest.json
+          cp -R static/* output/
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4.9.0
+        with:
+          branch: gh-pages
+          folder: output
+          clean: true
