@@ -7,16 +7,16 @@
     {
       "chipFamily": "ESP8266",
       "ota": {
-        "path": "window-actuator-esp8266.ota.bin",
-        "md5": "ff7cd18abd6cd1822e7be68459b25d10",
-        "sha256": "47a56d7e07d87bc6c417482257d21853ba123129632260a4ba1243debd122472"
+        "path": "window-actuator-esp8266/window-actuator-esp8266.ota.bin",
+        "md5": "ddfe0874c9acbb381190c390d65dbabc",
+        "sha256": "79f95fb130f207ca1016054a94517cfee1a7cc0cdc440eaf4f247f78ca529468"
       },
       "parts": [
         {
-          "path": "window-actuator-esp8266.factory.bin",
+          "path": "window-actuator-esp8266/window-actuator-esp8266.factory.bin",
           "offset": 0,
-          "md5": "ff7cd18abd6cd1822e7be68459b25d10",
-          "sha256": "47a56d7e07d87bc6c417482257d21853ba123129632260a4ba1243debd122472"
+          "md5": "ddfe0874c9acbb381190c390d65dbabc",
+          "sha256": "79f95fb130f207ca1016054a94517cfee1a7cc0cdc440eaf4f247f78ca529468"
         }
       ]
     }
